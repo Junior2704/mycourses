@@ -57,40 +57,43 @@
     from { opacity: 0; transform: scale(0.9); }
     to   { opacity: 1; transform: scale(1); }
   }
+
+  /* Style pour l'iframe */
+  #app-frame {
+    display: none; /* caché au départ */
+    width: 100vw;
+    height: 100vh;
+    border: none;
+  }
 </style>
 
 <script>
-// Détection mobile / ordinateur
-function isMobileDevice() {
-  return /Android|iPhone|iPad|iPod|webOS|BlackBerry|Windows Phone|Mobile/i.test(navigator.userAgent)
-      || (window.innerWidth < 850);
-}
-
-// Redirection après un court chargement
 window.onload = function () {
+  // Après 3 secondes, cacher le loader et afficher l'iframe
   setTimeout(() => {
-    if (isMobileDevice()) {
-      window.location.href = "mycourses.html";
-    } else {
-      window.location.href = "mycourses.html";
-    }
+    const loader = document.querySelector('.loader-wrapper');
+    loader.style.display = 'none';
+
+    const iframe = document.createElement('iframe');
+    iframe.id = "app-frame";
+    iframe.src = "mycourses.html";
+    document.body.appendChild(iframe);
+    iframe.style.display = 'block';
   }, 3000);
 };
-</script>
-</head>
 
-<body>
-
-  <div class="loader-wrapper">
-    <img id="logo" src="logo.png" alt="Logo">
-    <div class="spinner-ring"></div>
-  </div>
-<script>
+// Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js')
     .then(() => console.log("Service Worker enregistré !"));
 }
 </script>
+</head>
 
+<body>
+  <div class="loader-wrapper">
+    <img id="logo" src="logo.png" alt="Logo">
+    <div class="spinner-ring"></div>
+  </div>
 </body>
 </html>
