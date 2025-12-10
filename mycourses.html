@@ -395,6 +395,15 @@ input:focus {
     transform: scale(1.1);
     box-shadow: 0 3px 10px rgba(255, 0, 0, 0.25);
 }
+#logo {
+    width: 120px;
+    z-index: 2;
+    position: absolute;
+    left: 0;               /* aligné à gauche */
+    top: 50%;              /* centre vertical */
+    transform: translateY(-50%);
+    animation: fadeIn 1.5s ease-in-out;
+}
 
 
 </style>
@@ -422,7 +431,8 @@ input:focus {
 
             <div id="homeSection">
                 <h1>Bienvenue</h1>
-                <p>Sélectionnez une liste dans le menu de gauche.</p>
+                <p>Sélectionnez une liste dans le menu pour commencer.</p>
+                <img id="logo" src="logo.png" alt="Logo">
             </div>
 
             <div id="listSection" style="display:none;">
