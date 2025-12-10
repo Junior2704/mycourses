@@ -1,0 +1,791 @@
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>mycourses</title>
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+:root {
+    --blue-main: #1e6fff;
+    --blue-dark: #0d47c1;
+    --blue-soft: #e9f0ff;
+    --grey-bg: #f3f6fb;
+    --text-dark: #222;
+    --radius: 16px;
+    --shadow: 0 6px 22px rgba(0,0,0,0.10);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", "Segoe UI", Arial;
+    background: var(--grey-bg);
+    color: var(--text-dark);
+}
+
+
+
+/* Main */
+#main {
+  flex: 1;
+  padding: 20px;
+}
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: white;
+    padding: 28px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+
+#list-container {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+}
+
+
+.btn-add {
+    background: var(--blue-main);
+}
+.btn-add:hover {
+    background: var(--blue-dark);
+}
+
+.btn-shop {
+    background: #ff9500;
+}
+.btn-shop:hover {
+    background: #cc7a00;
+}
+.top-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 2px solid var(--blue-soft);
+    background: white;
+    border-radius: var(--radius);
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: var(--blue-main);
+    box-shadow: 0 0 0 3px rgba(30, 111, 255, 0.2);
+}
+.btn {
+    padding: 14px 18px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+#items li {
+    list-style: none;
+    background: var(--blue-soft);
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    margin: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+}
+.deleteBtn {
+    border: none;
+    background: #ff4d4d;
+    color: white;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.deleteBtn:hover {
+    background: #d93636;
+}
+/* ===== MODALES COLORÉES ===== */
+
+.modal-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.modal {
+    width: 92%;
+    max-width: 480px;
+    background: linear-gradient(135deg, #ffffff, #f3f6ff);
+    padding: 28px;
+    border-radius: 22px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.22);
+    animation: pop 0.25s ease-out;
+}
+
+.modal-header h2 {
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.modal-item {
+    background: #e8edff;
+    border-left: 6px solid #4a6cf7;
+    padding: 14px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+}
+
+.btn-green {
+    background: linear-gradient(135deg, #28a745, #32d067);
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.35);
+}
+.btn-green:hover {
+    background: #1f8a39;
+}
+
+.btn-grey {
+    background: linear-gradient(135deg, #a6a6a6, #8b8b8b);
+}
+.btn-grey:hover {
+    background: #6d6d6d;
+}
+
+/* Boutons principaux */
+.btn {
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+/* ========================= */
+/*     MENU LATÉRAL MODERNE  */
+/* ========================= */
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 6px 10px;
+  color: var(--brand);
+}
+.sidebar {
+  border-top-right-radius: 20px;     /* ⬅ arrondi haut à droite */
+  border-bottom-right-radius: 20px; 
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: white;
+  box-shadow: 4px 0 18px rgba(0,0,0,0.15);
+  z-index: 3000;
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 20px;
+  background: var(--brand);
+  color: white;
+}
+
+.sidebar-item {
+  padding: 16px 20px;
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: #f0f7ff;
+}
+
+.sidebar-item.logout {
+  margin-top: auto;
+  background: #ffeaea;
+  color: #b30000;
+  font-weight: 700;
+}
+
+.sidebar-item.logout:hover {
+  background: #ffd2d2;
+}
+
+/* overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 2500;
+  display: none;
+}
+
+.sidebar-overlay.show {
+  display: block;
+}
+
+/* ====== STYLE GLOBAL DES BOUTONS ====== */
+
+/* ---- STYLE MODERNE COMMUN ---- */
+.btn {
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+    color: white;
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(5px);
+}
+
+/* ====== BOUTON "AJOUTER" ====== */
+/* ---- BOUTON : AJOUTER ---- */
+.btn-add {
+    background: linear-gradient(145deg, #4b8bff, #0054ff);
+    box-shadow:
+        0 4px 10px rgba(0, 90, 255, 0.25),
+        inset 0 1px 1px rgba(255,255,255,0.25);
+}
+.btn-add:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 10px 22px rgba(0, 90, 255, 0.40),
+        inset 0 1px 2px rgba(255,255,255,0.3);
+}
+.btn-add:active {
+    transform: scale(0.97);
+}
+
+/* ---- BOUTON : ACHATS ---- */
+.btn-shop {
+    background: linear-gradient(145deg, #ffa93a, #ff7a00);
+    box-shadow:
+        0 4px 10px rgba(255, 140, 0, 0.30),
+        inset 0 1px 1px rgba(255,255,255,0.25);
+}
+.btn-shop:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 10px 22px rgba(255, 140, 0, 0.45),
+        inset 0 1px 2px rgba(255,255,255,0.3);
+}
+.btn-shop:active {
+    transform: scale(0.97);
+}
+
+
+/* ====== BOUTON DANS LES MODALES ====== */
+.btn-green {
+    background: linear-gradient(135deg, #28a745, #32d067);
+}
+.btn-green:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(40,167,69,0.35);
+}
+
+.btn-grey {
+    background: linear-gradient(135deg, #9aa0b3, #7d8394);
+    color: white !important;
+}
+.btn-grey:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(130,130,130,0.35);
+}
+
+/* ====== BOUTONS DES ARTICLES (supprimer) ====== */
+.deleteBtn {
+    background: linear-gradient(135deg, #ff4d4d, #d90429);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.15s;
+}
+.deleteBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(255,0,0,0.25);
+}
+@keyframes spinAround {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ==== ARTICLE DE LISTE (UL / LI) ==== */
+#list-items li {
+    list-style: none;
+    background: white;
+    padding: 14px 18px;
+    border-radius: 14px;
+    margin: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eef1f7;
+    transition: 0.2s;
+}
+
+#list-items li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+}
+
+/* ==== BOUTON SUPPRIMER ==== */
+.deleteBtn {
+    border: none;
+    background: #ff4d4d;
+    background: linear-gradient(135deg, #ff5c5c, #d90429);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+}
+
+/* Icône poubelle plus jolie */
+.deleteBtn::before {
+    content: "🗑️";
+    font-size: 15px;
+}
+
+.deleteBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(255, 0, 0, 0.25);
+}
+
+
+</style>
+</head>
+<body>
+    <!-- BOUTON BURGER -->
+    <button id="menuBtn" class="menu-btn">☰</button>
+
+    <!-- MENU LATERAL (NE DOIT PAS ÊTRE DANS #container) -->
+    <div id="sidebar" class="sidebar">
+        <h2>Menu</h2>
+		  <div class="sidebar-item" onclick="showhome()">🏠 Accueil</div>
+        <div class="sidebar-item" id="dynamic-lists"></div>
+				  <div class="sidebar-item" onclick="openManageLists()">⚙️ Gérer les listes</div>
+
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div id="container">
+
+        <div id="main">
+
+            <div id="homeSection">
+                <h1>Bienvenue</h1>
+                <p>Sélectionnez une liste dans le menu de gauche.</p>
+            </div>
+
+            <div id="listSection" style="display:none;">
+                <h1 id="listTitle">Liste</h1>
+                <div id="list-container">
+                    <div style="display:flex; gap:10px;">
+                        <input id="itemInput" placeholder="Ajouter un article..." style="flex:1; padding:12px;" />
+                        <button class="btn-add" onclick="addItemToList()">Ajouter</button>
+						<button class="btn-add" onclick="openMassAdd()">+ Masse</button>
+
+                        <button class="btn-achats" onclick="openAchats()">Achats</button>
+                    </div>
+                    <ul id="list-items"></ul>
+                </div>
+            </div>
+
+            <div id="manageSection" style="display:none;">
+                <h1>Gérer les listes</h1>
+                <input id="newListName" placeholder="Nouvelle liste" />
+                <button onclick="createNewList()">Créer</button>
+                <div id="manageListContainer"></div>
+            </div>
+
+        </div>
+    </div>
+	<!-- ========= MODALE AJOUT EN MASSE ========= -->
+<div id="massModalBg" class="modal-bg" style="display:none;">
+    <div class="modal" style="max-width:480px;">
+        <h2>Ajouter plusieurs articles</h2>
+        <p>1 ligne = 1 article<br>Format possible : <b>pâtes,3</b> (ajoute 3 fois)</p>
+
+        <textarea id="massInput" style="width:100%; height:180px; padding:12px; border-radius:12px; font-size:15px;"></textarea>
+
+        <button class="btn btn-green" style="width:100%; margin-top:15px;" onclick="validateMassAdd()">Valider</button>
+        <button class="btn btn-grey" style="width:100%; margin-top:8px;" onclick="closeMassAdd()">Fermer</button>
+    </div>
+</div>
+
+<!-- ========= MODALE ACHATS PAR LISTE ========= -->
+<div id="modal-bg" class="modal-bg" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; backdrop-filter:blur(3px); background:rgba(0,0,0,0.35); justify-content:center; align-items:center; z-index:5000;">
+  <div class="modal" style="width:92%; max-width:450px; background:white; padding:25px; border-radius:18px; box-shadow:0 8px 30px rgba(0,0,0,0.2);">
+    <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center;">
+      <h2>Articles à acheter</h2>
+      <button class="btn btn-grey" onclick="selectAllInList()">Tout sélectionner</button>
+    </div>
+
+    <div id="modal-list" class="modal-list" style="max-height:300px; overflow-y:auto; margin-top:15px;"></div>
+
+    <button class="btn btn-green" style="width:100%; margin-top:15px;" onclick="validatePurchasesInList()">Valider les achats</button>
+    <button class="btn btn-grey" style="width:100%; margin-top:8px;" onclick="closeModalList()">Fermer</button>
+  </div>
+</div>
+
+<!-- ========= LOADER AVEC LOGO + SPINNER ========= -->
+<div id="loadingModal" style="
+    display:none; 
+    position:fixed; 
+    top:0; left:0; 
+    width:100%; height:100%; 
+    background:rgba(0,0,0,0.35); 
+    z-index:5000; 
+    justify-content:center; 
+    align-items:center;">
+    
+    <div style="
+        background:white; 
+        padding:25px 30px; 
+        border-radius:20px; 
+        display:flex; 
+        flex-direction:column; 
+        gap:20px; 
+        align-items:center; 
+        box-shadow:0 4px 20px rgba(0,0,0,0.25);">
+
+        <!-- Logo + Spinner -->
+        <div style="position:relative; width:90px; height:90px;">
+
+            <!-- TON LOGO -->
+            <img src="logo.png" style="
+                width:60px; 
+                height:60px; 
+                position:absolute; 
+                top:50%; 
+                left:50%; 
+                transform:translate(-50%, -50%);
+                z-index:2;
+            ">
+
+            <!-- SPINNER QUI TOURNE AUTOUR -->
+            <div style="
+                position:absolute;
+                top:0; left:0;
+                width:100%; height:100%;
+                border-radius:50%;
+                border:6px solid transparent;
+                border-top-color:#4a6cf7;
+                animation: spinAround 1s linear infinite;
+            "></div>
+
+        </div>
+
+        <span style="font-size:16px; font-weight:600; color:#333;">Chargement...</span>
+    </div>
+</div>
+
+
+<style>
+@keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+</style>
+
+
+
+<script type="module">
+// Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  deleteDoc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyAdbAp3HcpbXsa93amtk0oemuahBaIp0IM",
+  authDomain: "liste-course-539ae.firebaseapp.com",
+  projectId: "liste-course-539ae",
+  storageBucket: "liste-course-539ae.firebasestorage.app",
+  messagingSenderId: "298786071754",
+  appId: "1:298786071754:web:1d205ce41d57d5d3bf8033"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Collections
+const listsCol = collection(db, "lists"); // contient toutes les listes
+
+// UI state
+window.currentListId = null;
+
+window.showHome = function() {
+  document.getElementById("homeSection").style.display = "block";
+  document.getElementById("listSection").style.display = "none";
+  document.getElementById("manageSection").style.display = "none";
+  closeMenu;
+}
+
+function openList(id, name) {
+  currentListId = id;
+  document.getElementById("listTitle").textContent = name;
+
+  document.getElementById("homeSection").style.display = "none";
+  document.getElementById("listSection").style.display = "block";
+  document.getElementById("manageSection").style.display = "none";
+
+  loadItemsFromList();
+}
+
+window.openManageLists = function() {
+  document.getElementById("homeSection").style.display = "none";
+  document.getElementById("listSection").style.display = "none";
+  document.getElementById("manageSection").style.display = "block";
+  closeMenu();
+}
+
+// Charger les listes dans le menu
+onSnapshot(listsCol, (snap) => {
+  const container = document.getElementById("dynamic-lists");
+  container.innerHTML = "";
+
+  const manage = document.getElementById("manageListContainer");
+  manage.innerHTML = "";
+
+  snap.forEach(d => {
+    const data = d.data();
+
+    // bouton dans le menu
+    const b = document.createElement("div");
+    b.textContent = "📄 " + data.name;
+b.onclick = () => { 
+    openList(d.id, data.name);
+    closeMenu();
+};
+    container.appendChild(b);
+
+    // gestion liste
+    const row = document.createElement("div");
+    row.style.marginTop = "10px";
+    row.innerHTML = `${data.name} <button onclick="deleteList('${d.id}')">Supprimer</button>`;
+    manage.appendChild(row);
+  });
+});
+
+// Créer une liste
+window.createNewList = async function () {
+  const name = document.getElementById("newListName").value.trim();
+  if (!name) return;
+  await addDoc(listsCol, { name });
+  document.getElementById("newListName").value = "";
+};
+
+// Supprimer une liste
+window.deleteList = async function (id) {
+  await deleteDoc(doc(db, "lists", id));
+};
+
+// Charger items d'une liste
+function loadItemsFromList() {
+  if (!currentListId) return;
+
+  const itemsCol = collection(db, `lists/${currentListId}/items`);
+  const ul = document.getElementById("list-items");
+
+  onSnapshot(itemsCol, snap => {
+    ul.innerHTML = "";
+
+    snap.forEach(d => {
+      const li = document.createElement("li");
+      li.textContent = d.data().name;
+
+      const del = document.createElement("button");
+      del.textContent = "🗑️";
+      del.onclick = () => deleteDoc(doc(db, `lists/${currentListId}/items`, d.id));
+
+      li.appendChild(del);
+      ul.appendChild(li);
+    });
+  });
+}
+
+// Ajouter un item
+window.addItemToList = async function () {
+  const input = document.getElementById("itemInput");
+  if (!input.value.trim()) return;
+
+  const itemsCol = collection(db, `lists/${currentListId}/items`);
+  await addDoc(itemsCol, { name: input.value.trim() });
+  input.value = "";
+};
+
+// Injection des fonctions Achats dans le module
+window.openAchats = function(){ if(!currentListId) return; document.getElementById("modal-bg").style.display = "flex"; loadAchatsList(); };
+
+function loadAchatsList(){
+  const modalList = document.getElementById("modal-list");
+  modalList.innerHTML = "";
+  const itemsCol = collection(db, `lists/${currentListId}/items`);
+  onSnapshot(itemsCol, snap => {
+    modalList.innerHTML = "";
+    snap.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "modal-item";
+      div.style.cssText = "display:flex; justify-content:space-between; background:#f0f2f5; padding:12px; border-radius:12px; margin-bottom:10px; align-items:center;";
+      const name = document.createElement("span");
+      name.textContent = d.data().name;
+      const cb = document.createElement("input"); cb.type = "checkbox"; cb.dataset.id = d.id;
+      div.appendChild(name); div.appendChild(cb); modalList.appendChild(div);
+    });
+  });
+}
+
+window.selectAllInList = function(){ document.querySelectorAll("#modal-list input[type='checkbox']").forEach(cb => cb.checked = true); };
+// ----------------------
+// MODALE AJOUT EN MASSE
+// ----------------------
+
+window.openMassAdd = function() {
+    document.getElementById("massModalBg").style.display = "flex";
+};
+
+window.closeMassAdd = function() {
+    document.getElementById("massModalBg").style.display = "none";
+};
+window.validateMassAdd = async function () {
+  document.getElementById("loadingModal").style.display = "flex";
+
+    const text = document.getElementById("massInput").value.trim();
+    if (!text || !currentListId) return;
+
+    const itemsCol = collection(db, `lists/${currentListId}/items`);
+    const lines = text.split("\n");
+
+    for (let rawLine of lines) {
+        let line = rawLine.trim();
+        if (!line) continue;
+
+        let qty = 1;
+        let name = line;
+
+        // Format : article,3
+        if (line.includes(",")) {
+            const parts = line.split(",");
+            name = parts[0].trim();
+            qty = parseInt(parts[1].trim()) || 1;
+        }
+
+        // Ajout multiple si nécessaire
+        for (let i = 0; i < qty; i++) {
+            await addDoc(itemsCol, { name });
+        }
+    }
+
+    document.getElementById("massInput").value = "";
+	  document.getElementById("loadingModal").style.display = "none";
+
+    closeMassAdd();
+};
+
+window.validatePurchasesInList = async function(){
+  const modalList = document.getElementById("modal-list");
+  const checkboxes = modalList.querySelectorAll("input[type='checkbox']");
+  document.getElementById("loadingModal").style.display = "flex";
+  let count = 0;
+  for(const cb of checkboxes){ if(cb.checked){ await deleteDoc(doc(db, `lists/${currentListId}/items`, cb.dataset.id)); count++; }}
+  document.getElementById("loadingModal").style.display = "none";
+  closeModalList();
+};
+window.closeModalList = function(){ document.getElementById("modal-bg").style.display = "none"; };
+// ---- MENU RETRACTABLE ----
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("menuOverlay");
+
+menuBtn.onclick = () => openMenu();
+
+window.openMenu = function () {
+    sidebar.classList.add("open");
+    overlay.classList.add("show");
+};
+
+window.closeMenu = function () {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+};
+// --- Fermer le menu quand on clique ailleurs ---
+document.addEventListener("click", (e) => {
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+    const overlay = document.getElementById("menuOverlay");
+
+    // Si le menu n'est pas ouvert → ne rien faire
+    if (!sidebar.classList.contains("open")) return;
+
+    // Si on clique sur le bouton menu → ne rien faire
+    if (menuBtn.contains(e.target)) return;
+
+    // Si on clique dans la sidebar → ne rien faire
+    if (sidebar.contains(e.target)) return;
+
+    // Sinon → fermer
+    closeMenu();
+});
+
+// Le clic sur l’overlay ferme aussi le menu
+document.getElementById("menuOverlay").onclick = () => closeMenu();
+
+
+</script>
+
+
+
+</body>
+</html>
